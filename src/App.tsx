@@ -1,26 +1,28 @@
 import React from 'react';
-import logo from './logo.svg';
-import './App.css';
+import  TaskList  from './components/TaskList';
+import useTaskFunctions from './components/Functions';
 
-function App() {
+const App = () => {
+  const { tasks, newTask, setNewTask, addTask, toggleTask, removeTask } = useTaskFunctions();
+
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.tsx</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+    <div>
+      <h1>📝 To-Do List</h1>
+
+      <input
+        type="text"
+        placeholder="Type your new task here"
+        value={newTask}
+        onChange={(e) => setNewTask(e.target.value)}
+      />
+      
+      <button onClick={addTask}>Add Task</button>
+
+      <TaskList tasks={tasks} toggleTask={toggleTask} removeTask={removeTask} />
     </div>
   );
-}
+};
 
 export default App;
+
+
