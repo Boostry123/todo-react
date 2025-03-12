@@ -12,21 +12,23 @@ interface TaskListProps{
 
 const TaskList = ({ tasks, toggleTask, removeTask }: TaskListProps) => {
   return (
-    <ul>
-      {tasks.map((task) => (
-        <li key={task.id}>
-          <input 
-            type="checkbox"
-            checked={task.completed}
-            onChange={() => toggleTask(task.id)}
-            />
-        <span key={task.id}>
-          {task.title}
-        </span>
-        <button onClick={() => removeTask(task.id)}>❌</button>
-        </li>
-      ))}
-    </ul>
+    <div className = "task-list">
+          <ul>
+            {tasks.map((task) => (
+              <li key={task.id}>
+                <input 
+                  type="checkbox"
+                  checked={task.completed}
+                  onChange={() => toggleTask(task.id)}
+                  />
+              <span key={task.id}>
+                {task.title}
+              </span>
+              <button className="remove-btn" onClick={() => removeTask(task.id)}>❌</button>
+              </li>
+            ))}
+          </ul>
+    </div>
   );
 };
 

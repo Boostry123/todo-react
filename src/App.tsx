@@ -6,8 +6,8 @@ const App = () => {
   const { tasks, newTask, setNewTask, addTask, toggleTask, removeTask } = TaskFunctions();
 
   return (
-    <div>
-      <h1>📝 To-Do List</h1>
+    <div className = "main">
+      <h1>To-Do List</h1>
 
       <input
         type="text"

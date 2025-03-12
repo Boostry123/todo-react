@@ -28,7 +28,7 @@ const TaskFunctions = () => {
     };
 
     const removeTask = (id: number) => {
-        setTasks(tasks.filter((task) => task.id !== id));
+        setTasks(tasks.filter((task : Task) => (task.id === id && task.completed === true)? false :task));
     };
     return { tasks, newTask, setNewTask, addTask, toggleTask, removeTask };
 }

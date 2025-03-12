@@ -1,14 +1,137 @@
-body {
+/* General Reset and Base Styles */
+* {
   margin: 0;
-  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
-    'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue',
-    sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
+  padding: 0;
+  box-sizing: border-box;
 }
 
-code {
-  font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
-    monospace;
+body {
+  font-family: 'Arial', sans-serif;
+  background-color: #f4f6f9;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+  color: #333;
 }
 
+.main {
+  background-color: #fff;
+  border-radius: 8px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+  padding: 20px;
+  width: 400px;
+  max-width: 100%;
+}
+
+h1 {
+  font-size: 24px;
+  color: #333;
+  margin-bottom: 20px;
+  text-align: center;
+}
+
+/* Input Field and Add Task Button */
+input[type="text"] {
+  width: 100%;
+  padding: 10px;
+  margin-bottom: 20px;
+  border: 1px solid #ddd;
+  border-radius: 4px;
+  font-size: 16px;
+  outline: none;
+}
+
+input[type="text"]:focus {
+  border-color: #007bff;
+}
+
+button {
+  background-color: #007bff;
+  color: white;
+  border: none;
+  padding: 10px;
+  border-radius: 4px;
+  cursor: pointer;
+  font-size: 16px;
+  width: 100%;
+}
+
+button:hover {
+  background-color: #0056b3;
+}
+
+button:active {
+  background-color: #003f7f;
+}
+
+button:focus {
+  outline: none;
+}
+
+/* Task List Styling */
+.task-list ul {
+  list-style: none;
+  padding-left: 0;
+}
+
+.task-list li {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 12px;
+  border-bottom: 1px solid #ddd;
+  width: 100%;
+}
+
+.task-list li:last-child {
+  border-radius: 8px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+}
+
+/* Checkbox Styling */
+.task-list input[type="checkbox"] {
+  margin-right: 10px;
+  flex-shrink: 0; /* Prevent checkbox from shrinking */
+}
+
+/* Task Text Styling */
+.task-list span {
+  flex-grow: 1;
+  word-wrap: break-word; /* Ensures the task text wraps */
+  max-width: 80%; /* Prevents text from stretching too wide */
+  font-size: 16px;
+  color: #333;
+}
+
+/* Remove Button Styling */
+.task-list button.remove-btn {
+  background-color: #007bff;
+  color: white;
+  border: none;
+  margin-left: 5px;
+  border-radius: 20%;
+  cursor: pointer;
+  font-size: 18px;
+  align-self: center; /* Ensures button stays vertically centered */
+  flex-shrink: 0; /* Prevents the button from shrinking */
+  transition: background-color 0.3s ease, transform 0.2s ease;
+  width: 30px;
+  height: 30px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.task-list button.remove-btn:hover {
+  background-color: #c0392b;
+  transform: scale(1.1); /* Slight scaling effect on hover */
+}
+
+.task-list button.remove-btn:active {
+  background-color: #a93226;
+}
+
+.task-list button.remove-btn:focus {
+  outline: none;
+}
