@@ -1,9 +1,9 @@
 
 import  TaskList  from './components/TaskList';
-import useTaskFunctions from './components/Functions';
+import TaskFunctions from './components/Functions';
 
 const App = () => {
-  const { tasks, newTask, setNewTask, addTask, toggleTask, removeTask } = useTaskFunctions();
+  const { tasks, newTask, setNewTask, addTask, toggleTask, removeTask } = TaskFunctions();
 
   return (
     <div>
