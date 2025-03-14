@@ -1,6 +1,3 @@
-import TaskFunctions from './Functions';
-import {Task} from './TaskList';
-
 interface TaskProps{
   
   newTask: string
