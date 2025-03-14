@@ -7,7 +7,7 @@
 
 body {
   font-family: 'Arial', sans-serif;
-  background-color: #f4f6f9;
+  background-color: #cececf;
   display: flex;
   justify-content: center;
   align-items: center;
@@ -110,7 +110,7 @@ button:focus {
   color: white;
   border: none;
   margin-left: 5px;
-  border-radius: 20%;
+  border-radius: 4px;
   cursor: pointer;
   font-size: 18px;
   align-self: center; /* Ensures button stays vertically centered */
@@ -124,7 +124,7 @@ button:focus {
 }
 
 .task-list button.remove-btn:hover {
-  background-color: #c0392b;
+  background-color: #4e1811;
   transform: scale(1.1); /* Slight scaling effect on hover */
 }
 

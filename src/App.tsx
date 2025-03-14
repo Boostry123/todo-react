@@ -1,6 +1,7 @@
-
+import AddTaskContainer from './components/AddTaskContainer';
 import  TaskList  from './components/TaskList';
 import TaskFunctions from './components/Functions';
+
 
 const App = () => {
   const { tasks, newTask, setNewTask, addTask, toggleTask, removeTask } = TaskFunctions();
@@ -9,14 +10,7 @@ const App = () => {
     <div className = "main">
       <h1>To-Do List</h1>
 
-      <input
-        type="text"
-        placeholder="Type your new task here"
-        value={newTask}
-        onChange={(e) => setNewTask(e.target.value)}
-      />
-      
-      <button onClick={addTask}>Add Task</button>
+      <AddTaskContainer newTask={newTask} setNewTask={setNewTask} addTask={addTask} />
 
       <TaskList tasks={tasks} toggleTask={toggleTask} removeTask={removeTask} />
     </div>
