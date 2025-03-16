@@ -1,6 +1,7 @@
 import React from 'react';
 import { useState } from 'react';
 import  {Task}  from './TaskList';
+import axios from 'axios';
 
 
 
@@ -8,7 +9,7 @@ const TaskFunctions = () => {
     const [tasks, setTasks] = useState<Task[]>([]);
     const [newTask, setNewTask] = useState<string>('');
 
-    const addTask = () => {
+    const addTask = async () => {
         if (!newTask.trim()) return;
 
         const newTaskItem: Task = {
@@ -17,8 +18,11 @@ const TaskFunctions = () => {
         completed: false,
         };
 
+
+        
         setTasks([...tasks, newTaskItem]);
         setNewTask('');
+
     };
 
     const toggleTask = (id: number) => {
