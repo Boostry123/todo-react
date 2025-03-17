@@ -1,6 +1,6 @@
 export interface Task{
     id: number;
-    title: string;
+    text: string;
     completed: boolean;
   }
 
@@ -22,7 +22,7 @@ const TaskList = ({ tasks, toggleTask, removeTask }: TaskListProps) => {
                   onChange={() => toggleTask(task.id)}
                   />
               <span key={task.id}>
-                {task.title}
+                {task.text}
               </span>
               <button className="remove-btn" onClick={() => removeTask(task.id)}>❌</button>
               </li>
