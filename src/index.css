@@ -124,7 +124,7 @@ button:focus {
 }
 
 .task-list button.remove-btn:hover {
-  background-color: #4e1811;
+  background-color: #0056b3;
   transform: scale(1.1); /* Slight scaling effect on hover */
 }
 

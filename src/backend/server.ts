@@ -1,11 +1,11 @@
 import express from 'express';
-
 import cors from 'cors';
 import { Task } from '../components/TaskList';
 import pg from 'pg';
 import dotenv from 'dotenv';
 
-dotenv.config();
+dotenv.config({path :"./src/backend/.env"});
+
 
 const app = express();  
 app.use(express.json());
@@ -17,7 +17,7 @@ const db = new pg.Pool({
      user: "postgres",
      password: process.env.DB_PASSWORD,
      host: "localhost",
-     port: 5432,
+     port: Number(process.env.DB_PORT),
      database: "todo_db"
      });
 
@@ -25,7 +25,7 @@ const db = new pg.Pool({
 app.get('/', async(req, res) => {
    
     try{
-        const data = await db.query('SELECT * FROM todos')
+        const data = await db.query('SELECT * FROM todos ORDER BY id ASC')
         res.json(data.rows);
     }catch(err : any){
         console.error('connection error', err.message)
@@ -46,12 +46,11 @@ app.post('/api/add', async(req, res) => {
     
 });
 
-app.delete('/api/delete', async(req,res) =>{
+app.delete('/api/delete/:id', async(req,res) =>{
     try{
-        const TaskToRemove : number = req.body.params;
+        const TaskToRemove : number = Number(req.params.id);
         const result = await db.query('DELETE FROM todos WHERE id=$1 RETURNING *',[TaskToRemove])
-        console.log("The Id: ",TaskToRemove," have been removed")
-        res.json(result)
+        res.json(result.rows)
     }catch(err:any){
         console.error(err.message)
     }
@@ -64,6 +63,15 @@ app.patch('/api/patch', async(req,res) =>{
         res.json(result)
     }catch(err:any){
         console.error(err.message)
+    }
+})
+
+app.put('/api/put', async(req,res) =>{
+    try {
+        const result = await db.query("SELECT setval('todos_id_seq', 1, false)")
+        res.json(result)
+    } catch (error : any) {
+        console.error(error.message)
     }
 })
 
