@@ -36,6 +36,7 @@ app.get('/', async(req, res) => {
 
 app.post('/api/add', async(req, res) => {
     try{
+        const timeStamp = new Date
         const newTask = req.body[0];
         const result = await db.query('INSERT INTO todos (text,completed) VALUES ($1, $2) RETURNING *',[newTask,false])
         console.log("new task added with params of: ", result.rows)
