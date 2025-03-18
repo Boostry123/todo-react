@@ -15,7 +15,7 @@ app.use(cors());
 
 const db = new pg.Pool({
      user: "postgres",
-     password: "6450",
+     password: process.env.DB_PASSWORD,
      host: "localhost",
      port: 5432,
      database: "todo_db"
