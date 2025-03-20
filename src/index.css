@@ -96,24 +96,20 @@ button:focus {
 }
 
 /* Task Text Styling */
-.task-list span {
+.task-list .text {
   flex-grow: 1;
   word-wrap: break-word; /* Ensures the task text wraps */
-  max-width: 80%; /* Prevents text from stretching too wide */
+  max-width: 70%; /* Prevents text from stretching too wide */
   font-size: 16px;
   color: #333;
+  font-family: 'Arial';
 }
 
 /* Remove Button Styling */
 .task-list button.remove-btn {
   background-color: #007bff;
   color: white;
-  border: none;
-  margin-left: 5px;
   border-radius: 4px;
-  cursor: pointer;
-  font-size: 18px;
-  align-self: center; /* Ensures button stays vertically centered */
   flex-shrink: 0; /* Prevents the button from shrinking */
   transition: background-color 0.3s ease, transform 0.2s ease;
   width: 30px;
@@ -121,6 +117,27 @@ button:focus {
   display: flex;
   justify-content: center;
   align-items: center;
+  align-self: center; /* Ensures button stays vertically centered */
+}
+.task-actions {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: fit-content; /* Ensures the container only takes up as much space as needed */
+}
+
+.remove-btn {
+  
+  margin-bottom: 5px; /* Adds spacing between button and date */
+  margin-top: 5px;
+}
+
+.dateCreated {
+  font-size: 15px;
+  color: #a0a0a0; /* Faded gray */
+  white-space: nowrap; /* Prevents wrapping */
+  font-family: serif;
+  
 }
 
 .task-list button.remove-btn:hover {

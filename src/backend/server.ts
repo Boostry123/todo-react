@@ -12,7 +12,7 @@ app.use(express.json());
 app.use(cors());
 
 
-
+//connecting to the Postgresql DataBase , todo_db , table todos
 const db = new pg.Pool({
      user: "postgres",
      password: process.env.DB_PASSWORD,
@@ -21,7 +21,7 @@ const db = new pg.Pool({
      database: "todo_db"
      });
 
-
+//retrive all rows from the todos table ordered ASC by id.
 app.get('/', async(req, res) => {
    
     try{
@@ -36,10 +36,12 @@ app.get('/', async(req, res) => {
 
 app.post('/api/add', async(req, res) => {
     try{
-        const timeStamp = new Date
+        const date = new Date();
+        const fullDate = date.getDate()+"/"+date.getMonth()+"/"+date.getFullYear();
         const newTask = req.body[0];
-        const result = await db.query('INSERT INTO todos (text,completed) VALUES ($1, $2) RETURNING *',[newTask,false])
+        const result = await db.query('INSERT INTO todos (text,completed,datecreated) VALUES ($1, $2, $3) RETURNING *',[newTask,false,fullDate])
         console.log("new task added with params of: ", result.rows)
+        console.log(fullDate);
         res.json(result.rows[0]);
     }catch(err : any){
         console.error(err.message)

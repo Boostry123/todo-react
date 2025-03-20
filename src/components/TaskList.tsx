@@ -2,6 +2,7 @@ export interface Task{
     id: number;
     text: string;
     completed: boolean;
+    datecreated: number;
   }
 
 interface TaskListProps{
@@ -21,11 +22,16 @@ const TaskList = ({ tasks, toggleTask, removeTask }: TaskListProps) => {
                   checked={task.completed}
                   onChange={() => toggleTask(task.id)}
                   />
-              <span key={task.id}>
+              <span key={task.id} className="text">
                 {task.text}
               </span>
-              <button className="remove-btn" onClick={() => removeTask(task.id)}>❌</button>
+              <div className="task-actions">
+                <button className="remove-btn" onClick={() => removeTask(task.id)}>❌</button>
+                <span className = "dateCreated">{task.datecreated}</span>
+              </div>
+              
               </li>
+              
             ))}
           </ul>
     </div>
