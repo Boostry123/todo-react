@@ -18,6 +18,7 @@ const TaskList = ({ tasks, toggleTask, removeTask }: TaskListProps) => {
             {tasks.map((task) => (
               <li key={task.id}>
                 <input 
+                  id={task.id.toString()}
                   type="checkbox"
                   checked={task.completed}
                   onChange={() => toggleTask(task.id)}

@@ -3,6 +3,7 @@ import cors from 'cors';
 import { Task } from '../components/TaskList';
 import pg from 'pg';
 import dotenv from 'dotenv';
+import moment from 'moment';
 
 dotenv.config({path :"./src/backend/.env"});
 
@@ -36,12 +37,11 @@ app.get('/', async(req, res) => {
 
 app.post('/api/add', async(req, res) => {
     try{
-        const date = new Date();
-        const fullDate = date.getDate()+"/"+date.getMonth()+"/"+date.getFullYear();
+        const date =  moment().format('DD/MM/YYYY');
+        
         const newTask = req.body[0];
-        const result = await db.query('INSERT INTO todos (text,completed,datecreated) VALUES ($1, $2, $3) RETURNING *',[newTask,false,fullDate])
+        const result = await db.query('INSERT INTO todos (text,completed,datecreated) VALUES ($1, $2, $3) RETURNING *',[newTask,false,date])
         console.log("new task added with params of: ", result.rows)
-        console.log(fullDate);
         res.json(result.rows[0]);
     }catch(err : any){
         console.error(err.message)

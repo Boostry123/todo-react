@@ -57,16 +57,26 @@ const TaskFunctions = () => {
 
 
     const removeTask = async(id: number) => {
-        const task : Task | undefined = tasks.find((task) => (task.id === id && task.completed === true))
+        const task : Task | undefined = tasks.find((task) => (task.id === id))
         
         try{
             if(task){
-                console.log(task)
-                const response = await axios.delete(`http://localhost:5000/api/delete/${id}`);
-                console.log(`ID: ${id} have been removed`)
-                setRender(true);
+                if(task.completed === true){
+                    console.log(task)
+                    const response = await axios.delete(`http://localhost:5000/api/delete/${id}`);
+                    console.log(`ID: ${id} have been removed`)
+                    setRender(true);
+                }else{
+                    const checkbox = document.getElementById(task.id.toString());
+                    if (checkbox) {
+                        checkbox.classList.add("checked");
+                    } else {
+                        console.error(`Checkbox with ID ${task.id} not found.`);
+                    }
+                }
+                
             }else{
-                console.log("no such ID or it is marked as uncomplete")
+                console.log("no such ID")
             }
         }catch(err : any){
             console.error(err.message);

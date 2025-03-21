@@ -108,10 +108,7 @@ button:focus {
 /* Remove Button Styling */
 .task-list button.remove-btn {
   background-color: #007bff;
-  color: white;
-  border-radius: 4px;
   flex-shrink: 0; /* Prevents the button from shrinking */
-  transition: background-color 0.3s ease, transform 0.2s ease;
   width: 30px;
   height: 30px;
   display: flex;
@@ -127,7 +124,6 @@ button:focus {
 }
 
 .remove-btn {
-  
   margin-bottom: 5px; /* Adds spacing between button and date */
   margin-top: 5px;
 }
@@ -142,13 +138,14 @@ button:focus {
 
 .task-list button.remove-btn:hover {
   background-color: #0056b3;
-  transform: scale(1.1); /* Slight scaling effect on hover */
+  transform: scale(0.98); /*Slight scaling effect on hover*/
 }
 
 .task-list button.remove-btn:active {
   background-color: #a93226;
 }
 
-.task-list button.remove-btn:focus {
-  outline: none;
+.checked{
+  box-shadow: 0pt 0pt 2pt 1pt  red inset;
+  transition : 1s;
 }
