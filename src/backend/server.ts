@@ -22,7 +22,7 @@ const db = new pg.Pool({
      database: "todo_db"
      });
 
-//retrive all rows from the todos table ordered ASC by id.
+//retrive all rows from the todos table ordered ASCENDING by id.
 app.get('/', async(req, res) => {
    
     try{
@@ -35,6 +35,7 @@ app.get('/', async(req, res) => {
     
 });
 
+//Recive the new Task , sets a new date of creation , updates the database with a new row of a new task.
 app.post('/api/add', async(req, res) => {
     try{
         const date =  moment().format('DD/MM/YYYY');
@@ -48,7 +49,7 @@ app.post('/api/add', async(req, res) => {
     }
     
 });
-
+//Removes a task from the database by id number.
 app.delete('/api/delete/:id', async(req,res) =>{
     try{
         const TaskToRemove : number = Number(req.params.id);
@@ -58,6 +59,7 @@ app.delete('/api/delete/:id', async(req,res) =>{
         console.error(err.message)
     }
 })
+//Updates the given task by id number , to be completed or not completed accordingly to use clicks.
 app.patch('/api/patch', async(req,res) =>{
     try{
         const TaskToPatch : number = req.body.params;
@@ -68,7 +70,7 @@ app.patch('/api/patch', async(req,res) =>{
         console.error(err.message)
     }
 })
-
+//If all tasks have been removed , The id which is Serial will reset to be indexed 1 from the first new task added.
 app.put('/api/put', async(req,res) =>{
     try {
         const result = await db.query("SELECT setval('todos_id_seq', 1, false)")

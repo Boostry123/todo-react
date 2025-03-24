@@ -6,6 +6,7 @@ import TaskFunctions from './components/Functions';
 
 
 const App = () => {
+  //importing various functions that the Main app would use
   const { tasks, newTask, setNewTask, addTask, toggleTask, removeTask } = TaskFunctions();
 
   return (

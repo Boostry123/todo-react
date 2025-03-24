@@ -1,16 +1,17 @@
+//defining the Task object and its structure.
 export interface Task{
     id: number;
     text: string;
     completed: boolean;
     datecreated: number;
   }
-
+//the types of what the TaskList function will recive
 interface TaskListProps{
   tasks: Task[];
   toggleTask: (id: number) => void;
   removeTask: (id: number) => void;
 }
-
+//The main task list that will be rendered on the screen, recives main functions to add ,toggle , remove tasks.
 const TaskList = ({ tasks, toggleTask, removeTask }: TaskListProps) => {
   return (
     <div className = "task-list">

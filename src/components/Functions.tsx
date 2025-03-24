@@ -4,12 +4,13 @@ import  {Task}  from './TaskList';
 import axios from 'axios';
 
 
-
+//main function that holds all functionality of the App
 const TaskFunctions = () => {
-    const [tasks, setTasks] = useState<Task[]>([]);
-    const [newTask, setNewTask] = useState<string>('');
-    const [render, setRender] = useState<boolean>(false);
+    const [tasks, setTasks] = useState<Task[]>([]); //A custom array that hold all the tasks
+    const [newTask, setNewTask] = useState<string>(''); //container to hold the new inputed task before it added to the list
+    const [render, setRender] = useState<boolean>(false); //used purely to rerender the tasks list
 
+    //function that renders the tasks recived from the database, if recived empty array it will render an empty task list. sets render back to false.
     useEffect(() => {
          axios.get<Task[]>('http://localhost:5000')
             .then(async( response )=> {
@@ -32,7 +33,7 @@ const TaskFunctions = () => {
         }, [render]);
 
 
-
+//function for adding tasks , uses API to take the new inputed task to the database.
     const addTask = async () => {
         if (!newTask.trim()) return;
 
@@ -44,7 +45,7 @@ const TaskFunctions = () => {
             console.error(err.message);
         }
     };
-
+//checkmark that controls weather the task is marked completed or not, cannot remove item if task is not marked complete.
     const toggleTask = async(id: number) => {
         try {
             const response = await axios.patch<number>('http://localhost:5000/api/patch', { params : id})
@@ -55,7 +56,7 @@ const TaskFunctions = () => {
 
     };
 
-
+//removes the task from the database , checks if task is completed , if not it wont remove the task.
     const removeTask = async(id: number) => {
         const task : Task | undefined = tasks.find((task) => (task.id === id))
         
@@ -83,6 +84,7 @@ const TaskFunctions = () => {
         }
         
     };
+    //returning all functions that will be used by other components
     return { tasks, newTask, setNewTask, addTask, toggleTask, removeTask };
 }
 

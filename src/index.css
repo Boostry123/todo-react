@@ -138,7 +138,7 @@ button:focus {
 
 .task-list button.remove-btn:hover {
   background-color: #0056b3;
-  transform: scale(0.98); /*Slight scaling effect on hover*/
+  transition: 0.5s; /*Slight scaling effect on hover*/
 }
 
 .task-list button.remove-btn:active {
@@ -147,5 +147,5 @@ button:focus {
 
 .checked{
   box-shadow: 0pt 0pt 2pt 1pt  red inset;
-  transition : 1s;
+  transition : 0.5s;
 }
