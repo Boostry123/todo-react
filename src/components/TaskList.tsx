@@ -3,7 +3,7 @@ export interface Task{
     id: number;
     text: string;
     completed: boolean;
-    datecreated: number;
+    datecreated: string;
   }
 //the types of what the TaskList function will recive
 interface TaskListProps{
