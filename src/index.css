@@ -35,11 +35,45 @@ h1 {
 input[type="text"] {
   width: 100%;
   padding: 10px;
-  margin-bottom: 20px;
   border: 1px solid #ddd;
   border-radius: 4px;
   font-size: 16px;
   outline: none;
+}
+#addTaskContainer{
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  align-content: center;
+  flex-direction: column;
+}
+.durationContainer{
+  width: 100%;
+  color: gray;
+  font-family: 'Arial', sans-serif;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  align-content: center;
+  padding: 20px;
+}
+#duration{
+  font-size: 16px;
+  outline: none;
+  margin-right:2cap;
+  border: 1px solid #ddd;
+  border-radius: 4px;
+  color: #333;
+}
+.duration{
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  border: #333 1px solid;
+  width:30px;
+  height:30px;
+  padding: 5px;
+  border-radius: 100%;
 }
 
 input[type="text"]:focus {
@@ -135,6 +169,7 @@ button:focus {
   font-family: serif;
   
 }
+
 
 .task-list button.remove-btn:hover {
   background-color: #0056b3;

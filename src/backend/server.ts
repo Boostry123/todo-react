@@ -1,6 +1,5 @@
 import express from 'express';
 import cors from 'cors';
-import { Task } from '../components/TaskList';
 import pg from 'pg';
 import dotenv from 'dotenv';
 import moment from 'moment';
@@ -40,10 +39,11 @@ app.post('/api/add', async(req, res) => {
     try{
         const date =  moment().format('DD/MM/YYYY');
         
-        const newTask = req.body[0];
-        const result = await db.query('INSERT INTO todos (text,completed,datecreated) VALUES ($1, $2, $3) RETURNING *',[newTask,false,date])
+        const newTask : string = req.body[0];
+        const duration : number = req.body[1];
+        const result = await db.query('INSERT INTO todos (text,completed,datecreated,duration) VALUES ($1, $2, $3, $4) RETURNING *',[newTask,false,date,duration])
         console.log("new task added with params of: ", result.rows)
-        res.json(result.rows[0]);
+        res.json(result.rows[0])
     }catch(err : any){
         console.error(err.message)
     }
@@ -73,7 +73,9 @@ app.patch('/api/patch', async(req,res) =>{
 //If all tasks have been removed , The id which is Serial will reset to be indexed 1 from the first new task added.
 app.put('/api/put', async(req,res) =>{
     try {
-        const result = await db.query("SELECT setval('todos_id_seq', 1, false)")
+        const task = req.body.params;
+        console.log(task)
+        const result = await db.query(`SELECT setval('todos_id_seq', 1, false)`)
         res.json(result)
     } catch (error : any) {
         console.error(error.message)
