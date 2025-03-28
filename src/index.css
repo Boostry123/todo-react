@@ -20,8 +20,7 @@ body {
   border-radius: 8px;
   box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
   padding: 20px;
-  width: 400px;
-  max-width: 100%;
+  max-height: 100%;
 }
 
 h1 {
@@ -73,7 +72,8 @@ input[type="text"] {
   width:30px;
   height:30px;
   padding: 5px;
-  border-radius: 100%;
+  margin: 5px;
+  border-radius: 50%;
 }
 
 input[type="text"]:focus {

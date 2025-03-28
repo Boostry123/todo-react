@@ -1,6 +1,6 @@
 
 //defining the Task object and its structure.
-export interface Task{
+export type Task ={
     id: number;
     text: string;
     completed: boolean;
@@ -9,6 +9,7 @@ export interface Task{
   }
 //the types of what the TaskList function will recive
 type ArrayType<T,U> = [T,U];
+
 interface TaskListProps{
   tasks: Task[];
   toggleTask: (id: number) => void;
@@ -18,9 +19,13 @@ interface TaskListProps{
 
 
 
-
-
-//The main task list that will be rendered on the screen, recives main functions to add ,toggle , remove tasks.
+/*The main task list that will be rendered on the screen, recives main functions to add ,toggle , remove and setDurationStatus tasks.
+Params: tasks
+        toggleTask
+        removeTask
+        durationStatus
+returns: React component TaskList
+*/
 const TaskList = ({ tasks, toggleTask, removeTask, durationStatus }: TaskListProps) => {
 
   return (

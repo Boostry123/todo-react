@@ -35,11 +35,17 @@ const TaskFunctions = () => {
             setRender(false);
         }, [render]);
 
-    //function that checks the duration of the task and returns a color accordingly to the days passed from the creation of the task.       
+    /*function that checks the duration set for the task with the datecreated.
+    will return a color according to days left , together with the amount of days left to complete the task
+    params: 
+        task :Task
+    returns:
+        durationStatusArrayType<string,number>
+    */       
         type durationStatusArrayType<T,U> = [T,U];
         function durationStatus(task: Task) : durationStatusArrayType<string,number>{
         const passedDays = Math.abs(moment(task.datecreated, "DD/MM/YYYY").diff(moment(), 'days'));
-        let status : durationStatusArrayType<string,number> = ["green",0];
+        let status : durationStatusArrayType<string,number> = ["green",NaN];
             if(parseInt(task.duration)){
                 const daysLeft = (parseInt(task.duration) - passedDays) < 1? 0 : parseInt(task.duration) - passedDays ;
 
@@ -74,7 +80,12 @@ const TaskFunctions = () => {
             console.error(err.message);
         }
     };
-//checkmark that controls weather the task is marked completed or not, cannot remove item if task is not marked complete.
+/*checkmark that controls weather the task is marked completed or not, cannot remove item if task is not marked complete.
+params:
+    id : number
+returns:
+    void
+*/
     const toggleTask = async(id: number) => {
         try {
             await axios.patch<number>('http://localhost:5000/api/patch', { params : id})
@@ -86,7 +97,12 @@ const TaskFunctions = () => {
 
     };
 
-//removes the task from the database , checks if task is completed , if not it wont remove the task.
+/*removes the task from the database , checks if task is completed , if not it wont remove the task.
+params:
+    id : number
+returns:
+    void
+*/
     const removeTask = async(id: number) => {
         const task : Task | undefined = tasks.find((task) => (task.id === id))
         
