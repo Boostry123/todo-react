@@ -1,6 +1,7 @@
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
 
-![todo-app](https://github.com/user-attachments/assets/a5258a67-1880-4d64-ba80-90dbf365fc69)
+![image](https://github.com/user-attachments/assets/769f2010-2a18-496b-bb6a-ae1a29557a48)
+
 
 
 
