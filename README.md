@@ -1,5 +1,9 @@
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
 
+![Uploading image.png…]()
+
+
+
 first steps:
 1) npm init y
 2) make an env file as following:
