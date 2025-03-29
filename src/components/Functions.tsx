@@ -1,8 +1,10 @@
-import  { useEffect } from 'react';
-import { useState } from 'react';
-import  {Task}  from './TaskList';
+import  { useEffect,useState  } from 'react';
 import axios from 'axios';
 import moment from 'moment';
+import { arrayMove } from '@dnd-kit/sortable';
+import { DragEndEvent, UniqueIdentifier } from '@dnd-kit/core';
+
+import  {Task}  from './Task';
 
 //main function that holds all functionality of the App
 const TaskFunctions = () => {
@@ -23,6 +25,11 @@ const TaskFunctions = () => {
                         setTasks(newTasks);
                     }else{
                         setTasks(response.data)
+                        for(let i =0; i < tasks.length; i++){
+                            tasks[i].order = i+1;
+                        }
+                        await axios.patch('http://localhost:5000/api/updateOrder', {tasks: tasks});
+                        
                         console.log('status code: ', response.status)
                     }
                 } catch (error : any) {
@@ -71,7 +78,7 @@ const TaskFunctions = () => {
         if (!newTask.trim()) return;
 
         try{
-            const response = await axios.post<[Task,number]>('http://localhost:5000/api/add', [newTask, duration]);
+            const response = await axios.post<[Task,number]>('http://localhost:5000/api/add', [newTask, duration, tasks[tasks.length-1].order+1]);
             console.log(response.status);
             setNewTask('');
             setDuration('null');
@@ -88,7 +95,7 @@ returns:
 */
     const toggleTask = async(id: number) => {
         try {
-            await axios.patch<number>('http://localhost:5000/api/patch', { params : id})
+            const response =await axios.patch<number>('http://localhost:5000/api/toggle', { params : id})
             console.log(`ID: ${id} have been marked ${tasks.find((task) => (task.id === id))?.completed ? 'Not Complete' : 'Complete'}`)
             setRender(true);
         } catch (error : any) {
@@ -130,8 +137,52 @@ returns:
         }
         
     };
+    const updateTaskOrder = async (tasks: Task[]) => {
+        try {
+            await axios.patch('http://localhost:5000/api/updateOrder', {tasks: tasks});
+            setRender(true);
+            console.log('Task order updated successfully');
+        } catch (error) {
+            console.error('Error updating task order:', error);
+        }
+    }
+
+//this is a helper function that sets the order of the tasks according to the order they are in the array.
+const tasksOrder =(tasks: Task[]) =>{
+    for(let i =0; i < tasks.length; i++){
+        tasks[i].order = i+1;
+    }
+}
+/* 
+function that that handles the functionality of the drag and drop of tasks to rearange.
+params:
+    event : DragEndEvent
+returns:
+    void
+*/
+    const handleDragEnd = async(event : DragEndEvent) => {
+        const {active , over} = event;
+        if( over === null|| active.id === over.id) return;
+
+        const getTaskPos = (id: UniqueIdentifier):number => {
+            return tasks.findIndex((task) => task.id === id);
+            
+        }
+            const originalIndex : number = getTaskPos(active.id);
+            const newIndex : number = getTaskPos(over.id);
+            [tasks[originalIndex], tasks[newIndex]] = [tasks[newIndex], tasks[originalIndex]];
+            tasksOrder(tasks);
+            
+            
+            updateTaskOrder(tasks);
+        
+        setRender(true);
+
+    }
+
+
     //returning all functions that will be used by other components
-    return { tasks, newTask, setNewTask, addTask, toggleTask, removeTask,setDuration,durationStatus };
+    return { tasks, newTask, setNewTask, addTask, toggleTask, removeTask,setDuration,durationStatus,handleDragEnd };
 }
 
 export default TaskFunctions;

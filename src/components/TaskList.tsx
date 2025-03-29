@@ -1,20 +1,16 @@
+import {SortableContext, verticalListSortingStrategy} from "@dnd-kit/sortable";
 
-//defining the Task object and its structure.
-export type Task ={
-    id: number;
-    text: string;
-    completed: boolean;
-    datecreated: string;
-    duration: string;
-  }
+import TaskItem from "./Task";
+import {Task} from "./Task";
+
 //the types of what the TaskList function will recive
-type ArrayType<T,U> = [T,U];
+type durationStatusArrayType<T,U> = [T,U];
 
 interface TaskListProps{
   tasks: Task[];
   toggleTask: (id: number) => void;
   removeTask: (id: number) => void;
-  durationStatus: (task: Task) => ArrayType<string,number>;
+  durationStatus: (task: Task) => durationStatusArrayType<string,number>;
 }
 
 
@@ -31,29 +27,11 @@ const TaskList = ({ tasks, toggleTask, removeTask, durationStatus }: TaskListPro
   return (
     <div className = "task-list">
           <ul>
+            <SortableContext items={tasks} strategy={verticalListSortingStrategy}>
             {tasks.map((task) => (
-              <li key={task.id}>
-                <input 
-                  id={task.id.toString()}
-                  type="checkbox"
-                  checked={task.completed}
-                  onChange={() => toggleTask(task.id)}
-                  />
-              <span key={task.id} className="text">
-                {task.text}
-              </span>
-
-              <span className="duration" style={{color:durationStatus(task)[0],borderColor:durationStatus(task)[0]}}>{durationStatus(task)[1]}</span>
-              <div className="task-actions">
-                
-                <button className="remove-btn" onClick={() => removeTask(task.id)}>❌</button>
-                <span className = "dateCreated" >{task.datecreated}</span>
-                
-              </div>
-              
-              </li>
-              
+              <TaskItem key={task.id} task={task} toggleTask={toggleTask} removeTask={removeTask} durationStatus={durationStatus} />
             ))}
+            </SortableContext>
           </ul>
     </div>
   );

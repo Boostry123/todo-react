@@ -4,6 +4,7 @@ import pg from 'pg';
 import dotenv from 'dotenv';
 import moment from 'moment';
 
+import { Task } from '../components/Task';
 dotenv.config({path :"./src/backend/.env"});
 
 
@@ -25,7 +26,7 @@ const db = new pg.Pool({
 app.get('/', async(req, res) => {
    
     try{
-        const data = await db.query('SELECT * FROM todos ORDER BY id ASC')
+        const data = await db.query('SELECT * FROM todos ORDER BY "order" ASC')
         res.json(data.rows);
     }catch(err : any){
         console.error('connection error', err.message)
@@ -41,7 +42,8 @@ app.post('/api/add', async(req, res) => {
         
         const newTask : string = req.body[0];
         const duration : number = req.body[1];
-        const result = await db.query('INSERT INTO todos (text,completed,datecreated,duration) VALUES ($1, $2, $3, $4) RETURNING *',[newTask,false,date,duration])
+        const order : number = req.body[2];
+        const result = await db.query('INSERT INTO todos (text,completed,datecreated,duration,"order") VALUES ($1, $2, $3, $4, $5) RETURNING *',[newTask,false,date,duration,order])
         console.log("new task added with params of: ", result.rows)
         res.json(result.rows[0])
     }catch(err : any){
@@ -60,12 +62,12 @@ app.delete('/api/delete/:id', async(req,res) =>{
     }
 })
 //Updates the given task by id number , to be completed or not completed accordingly to use clicks.
-app.patch('/api/patch', async(req,res) =>{
+app.patch('/api/toggle', async(req,res) =>{
     try{
         const TaskToPatch : number = req.body.params;
         const result = await db.query('UPDATE todos SET completed = NOT completed WHERE id = $1',[TaskToPatch])
         console.log("The Id: ",TaskToPatch," have been marked Complete/Not Complete")
-        res.json(result)
+        res.status(200).json(result)
     }catch(err:any){
         console.error(err.message)
     }
@@ -76,9 +78,22 @@ app.put('/api/put', async(req,res) =>{
         const task = req.body.params;
         console.log(task)
         const result = await db.query(`SELECT setval('todos_id_seq', 1, false)`)
-        res.json(result)
+        res.status(200).json(result)
     } catch (error : any) {
         console.error(error.message)
+    }
+})
+//update the order of the tasks in the database according to the new order of the tasks in the front end.
+app.patch('/api/updateOrder', async(req,res) =>{
+    try {
+        const tasks = req.body.tasks;
+        tasks.map(async(task : Task) => {
+            
+            const response = await db.query('UPDATE todos SET "order" = $1 WHERE id = $2 RETURNING *',[task.order,task.id])
+        })
+        res.status(200).json({message: "Order updated successfully"})
+    } catch (error : any) {
+        res.status(500).json({error: error.message})
     }
 })
 
